@@ -30,7 +30,7 @@
 
 	<!-- Source -->
 	<div class="container">
-		<p><b><?= esc(static::cleanPath($file, $line)) ?></b> at line <b><?= esc($line) ?></b></p>
+		<p><b><?= esc(clean_path($file)) ?></b> at line <b><?= esc($line) ?></b></p>
 
 		<?php if (is_file($file)) : ?>
 			<div class="source">
@@ -65,11 +65,11 @@
 								<?php
 								if (isset($row['function']) && in_array($row['function'], ['include', 'include_once', 'require', 'require_once'], true))
 								{
-									echo esc($row['function'] . ' ' . static::cleanPath($row['file']));
+									echo esc($row['function'] . ' ' . clean_path($row['file']));
 								}
 								else
 								{
-									echo esc(static::cleanPath($row['file']) . ' : ' . $row['line']);
+									echo esc(clean_path($row['file']) . ' : ' . $row['line']);
 								}
 								?>
 							<?php else : ?>
@@ -353,7 +353,7 @@
 
 				<ol>
 				<?php foreach ($files as $file) :?>
-					<li><?= esc(static::cleanPath($file)) ?></li>
+					<li><?= esc(clean_path($file)) ?></li>
 				<?php endforeach ?>
 				</ol>
 			</div>

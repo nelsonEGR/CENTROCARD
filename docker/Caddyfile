@@ -1,0 +1,4 @@
+https://centrocar.dev {
+    tls internal
+    reverse_proxy app:80
+}

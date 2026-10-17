@@ -205,7 +205,7 @@ class Ventas extends BaseController
         } else {
             $id_cli = $this->request->getVar('id_cliente');
             if (empty($id_cli)) {
-                $id_cli == 1;
+                $id_cli = 1;
             }
             $estado = ($this->request->getVar('metodo') == 'Contado') ? 1 : 2;
             $id_venta = $this->ventas->insert([

@@ -19,17 +19,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Apache: document root en /public y permitir .htaccess (rewrite de CI4)
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN a2enmod rewrite \
+RUN a2enmod rewrite setenvif \
     && sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
-    && sed -ri -e 's!AllowOverride None!AllowOverride All!g' /etc/apache2/apache2.conf
+    && sed -ri -e 's!AllowOverride None!AllowOverride All!g' /etc/apache2/apache2.conf \
+    && printf '%s\n' 'SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on' > /etc/apache2/conf-available/forwarded-https.conf \
+    && a2enconf forwarded-https
 
 WORKDIR /var/www/html
 
 # Código de la aplicación
 COPY . .
 
-# Dependencias de producción + permisos de escritura
+# Dependencias de produccion + archivos iniciales para volumenes locales
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
+    && install -D -m 644 public/img/productos/default.jpg /opt/centrocard/default.jpg \
     && chown -R www-data:www-data writable \
     && chmod -R 775 writable
 

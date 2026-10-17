@@ -1,60 +1,46 @@
-# CodeIgniter 4 Framework
+# Centrocard
 
-## What is CodeIgniter?
+Sistema POS construido con CodeIgniter 4 y PostgreSQL.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Inicio local
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+El proyecto local no necesita Laragon, PHP, Composer ni PostgreSQL instalados en Windows. Solo requiere Docker Desktop con los puertos `80` y `443` libres.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+1. Clona el repositorio y abre PowerShell como Administrador en la raiz del proyecto.
+2. Ejecuta `powershell -ExecutionPolicy Bypass -File .\docker\setup-local.ps1`.
+3. Abre `https://centrocar.dev`.
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+El script registra `centrocar.dev` en el archivo `hosts`, inicia Docker Compose e instala en Windows el certificado local de Caddy. El dominio `.dev` requiere HTTPS, por eso no funciona de forma fiable con HTTP plano.
 
-## Important Change with index.php
+Credenciales iniciales de desarrollo: `admin` / `password`. Cambia la contrasena despues de iniciar sesion. Esos datos solo existen en la base de datos local creada por Docker.
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## Servicios locales
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+- `proxy`: Caddy con HTTPS local para `centrocar.dev`.
+- `app`: PHP 8.3, Apache y CodeIgniter.
+- `database`: PostgreSQL 16 local.
 
-**Please** read the user guide for a better explanation of how CI4 works!
+La primera ejecucion aplica la migracion y carga datos de desarrollo sin usar el dump legado ni una base Neon. Los datos, sesiones, cargas de productos y certificados se guardan en volumenes Docker, fuera del arbol del repositorio.
 
-## Repository Management
+Para detener el entorno usa `docker compose down`. Para eliminar todos los datos locales usa `docker compose down --volumes` y vuelve a ejecutar el script de inicio. Este ultimo comando borra la base de datos local.
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+Si Docker informa que los puertos `80` o `443` estan ocupados, detiene el servicio que los usa antes de ejecutar el script. No es necesario desinstalar Laragon, pero este proyecto ya no depende de el.
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+## Configuracion y despliegue
 
-## Contributing
+Docker Compose define una configuracion local segura para desarrollo y no lee el `.env` local. `.env.example` documenta esos valores para otros entornos. Nunca publiques `.env`, dumps, sesiones, logs o archivos de `writable`.
 
-We welcome contributions from the community.
+Para Render se conserva `render.yaml`. Configura las credenciales de PostgreSQL y la URL de produccion en el panel de Render; no uses las credenciales ni los datos locales de desarrollo en produccion.
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+## Verificacion
 
-## Server Requirements
+En una maquina con las herramientas instaladas, ejecuta:
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+```powershell
+docker compose config
+docker compose up --build --detach
+composer validate --strict
+composer test
+```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> The end of life date for PHP 7.4 was November 28, 2022.
-> The end of life date for PHP 8.0 was November 26, 2023.
-> If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> The end of life date for PHP 8.1 will be November 25, 2024.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+El workflow `.github/workflows/verify.yml` instala las dependencias de desarrollo y ejecuta la validacion de Composer y PHPUnit en cada push y pull request.

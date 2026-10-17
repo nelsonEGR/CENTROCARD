@@ -14,7 +14,9 @@ composer.phar
 #--------------------------------------------------------------------
 # Entorno (SECRETOS - NO subir)
 #--------------------------------------------------------------------
-.env
+/.env
+/.env.*
+!/.env.example
 
 #--------------------------------------------------------------------
 # Writable (datos temporales)
@@ -44,3 +46,10 @@ ci4-pos.sql
 #--------------------------------------------------------------------
 /docker-compose.override.yml
 /.vscode/
+/.idea/
+
+# Reportes y configuracion local de pruebas
+/build/
+/tests/coverage/
+/tests/coverage.txt
+/phpunit.xml

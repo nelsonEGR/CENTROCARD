@@ -109,7 +109,7 @@ class Cotizaciones extends BaseController
     {
         $id_cli = $this->request->getVar('id_cliente');
         if (empty($id_cli)) {
-            $id_cli == 1;
+            $id_cli = 1;
         }
         $id_cotizacion = $this->cotizaciones->insert([
             'total' => $this->cartController->getTotalPrice('cotizaciones'),

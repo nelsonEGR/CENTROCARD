@@ -1,4 +1,5 @@
 .git
+.github
 .gitignore
 .dockerignore
 
@@ -29,3 +30,11 @@ docker-compose.yml
 
 README.md
 *.log
+build
+tests
+phpunit.xml
+phpunit.xml.dist
+
+# Las imagenes de productos son datos de ejecucion; solo se conserva el placeholder.
+public/img/productos/*
+!public/img/productos/default.jpg
