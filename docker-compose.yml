@@ -1,0 +1,14 @@
+services:
+  pos:
+    build: .
+    image: centrocard-pos:local
+    ports:
+      - "8080:80"
+    environment:
+      PORT: "80"
+    volumes:
+      # CI4 lee el .env del proyecto (no se copia dentro de la imagen)
+      - ./.env:/var/www/html/.env:ro
+      # Persistencia local de escritura e imágenes subidas
+      - ./writable:/var/www/html/writable
+      - ./public/img/productos:/var/www/html/public/img/productos

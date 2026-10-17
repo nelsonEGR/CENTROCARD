@@ -1,0 +1,31 @@
+.git
+.gitignore
+.dockerignore
+
+# Secretos / entorno (se inyectan en runtime)
+.env
+
+# Dependencias (se reinstalan dentro de la imagen)
+vendor
+node_modules
+
+# Contenido temporal / generado
+writable/cache/*
+writable/logs/*
+writable/session/*
+writable/debugbar/*
+writable/uploads/*
+writable/backups/*
+writable/*.log
+writable/nginx.pid
+
+# Local dev / dumps
+serve.bat
+serve-stop.bat
+nginx.conf
+ci4-pos.sql
+public/backup.zip
+docker-compose.yml
+
+README.md
+*.log

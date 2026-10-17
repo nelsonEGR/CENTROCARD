@@ -1,0 +1,45 @@
+#--------------------------------------------------------------------
+# Archivos especificos del SO
+#--------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.log
+
+#--------------------------------------------------------------------
+# Composer
+#--------------------------------------------------------------------
+/vendor/
+composer.phar
+
+#--------------------------------------------------------------------
+# Entorno (SECRETOS - NO subir)
+#--------------------------------------------------------------------
+.env
+
+#--------------------------------------------------------------------
+# Writable (datos temporales)
+#--------------------------------------------------------------------
+/writable/cache/*
+!/writable/cache/index.html
+/writable/logs/*
+!/writable/logs/index.html
+/writable/session/*
+!/writable/session/index.html
+/writable/debugbar/*
+!/writable/debugbar/index.html
+/writable/uploads/*
+!/writable/uploads/index.html
+/writable/backups/*
+!/writable/backups/index.html
+/writable/*.pid
+
+#--------------------------------------------------------------------
+# Respaldos / dumps con datos (NO subir)
+#--------------------------------------------------------------------
+public/backup.zip
+ci4-pos.sql
+
+#--------------------------------------------------------------------
+# Local / contenedor
+#--------------------------------------------------------------------
+/docker-compose.override.yml

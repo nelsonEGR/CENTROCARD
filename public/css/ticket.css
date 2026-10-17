@@ -1,0 +1,66 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.ticket {
+    width: 226.77pt;
+    margin: 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.logo img {
+    max-width: 50px;
+    height: auto;
+}
+
+.business-info {
+    text-align: center;
+    font-size: 14px;
+}
+
+.ticket-details {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.ticket-details h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.ticket-details p {
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    padding: 2px;
+}
+
+th, td {
+    padding: 1px;
+    text-align: left;
+}
+th{
+    border-bottom: 3px double black;
+}
+
+.text-right{
+    text-align: right;
+}
+
+/* Puedes agregar más estilos según tus necesidades */
