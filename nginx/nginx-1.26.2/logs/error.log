@@ -1,0 +1,6 @@
+2026/10/17 15:37:01 [notice] 11044#8516: using inherited sockets from "C:\CENTROCARD\nginx\nginx-1.26.2\nginx.exe"
+2026/10/17 15:37:01 [emerg] 11044#8516: invalid socket number "C:\CENTROCARD\nginx\nginx-1.26.2\nginx.exe" in NGINX environment variable, ignoring the rest of the variable
+2026/10/17 15:37:01 [emerg] 11044#8516: invalid socket number "C:\CENTROCARD\nginx\nginx-1.26.2\nginx.exe" in NGINX environment variable, ignoring
+2026/10/17 15:37:01 [notice] 4420#11660: using inherited sockets from "C:\CENTROCARD\nginx\nginx-1.26.2\nginx.exe"
+2026/10/17 15:37:01 [emerg] 4420#11660: invalid socket number "C:\CENTROCARD\nginx\nginx-1.26.2\nginx.exe" in NGINX environment variable, ignoring the rest of the variable
+2026/10/17 15:37:01 [emerg] 4420#11660: invalid socket number "C:\CENTROCARD\nginx\nginx-1.26.2\nginx.exe" in NGINX environment variable, ignoring
