@@ -43,3 +43,4 @@ ci4-pos.sql
 # Local / contenedor
 #--------------------------------------------------------------------
 /docker-compose.override.yml
+/.vscode/

@@ -14,6 +14,11 @@ services:
       # Ajusta la URL al nombre real del servicio en Render
       - key: app.baseURL
         value: https://centrocard-pos.onrender.com/
+      # Parametros de negocio usados en tickets y precios
+      - key: IMPUESTO
+        value: "10"
+      - key: GANANCIA
+        value: "25"
       # Credenciales: se configuran en el panel de Render (no en el repo)
       - key: database.default.hostname
         sync: false
