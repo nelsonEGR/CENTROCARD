@@ -4,11 +4,32 @@ set -eu
 # Los hosts tipo Render exponen el puerto en $PORT (por defecto 80 en local).
 PORT="${PORT:-80}"
 
+# Genera el .env interno de CodeIgniter a partir de las variables de entorno
+# del contenedor. Asi la conexion se controla por variables (Docker/Render).
+if [ -n "${DB_HOSTNAME:-}" ]; then
+    {
+        printf 'CI_ENVIRONMENT = %s\n' "${CI_ENVIRONMENT:-production}"
+        printf "app.baseURL = '%s'\n" "${APP_BASE_URL:-http://localhost/}"
+        printf 'database.default.hostname = %s\n' "${DB_HOSTNAME}"
+        printf 'database.default.database = %s\n' "${DB_DATABASE:-}"
+        printf 'database.default.username = %s\n' "${DB_USERNAME:-}"
+        printf 'database.default.password = %s\n' "${DB_PASSWORD:-}"
+        printf 'database.default.DBDriver = Postgre\n'
+        printf 'database.default.port = %s\n' "${DB_PORT:-5432}"
+        printf 'database.default.schema = %s\n' "${DB_SCHEMA:-public}"
+        printf 'database.default.sslmode = %s\n' "${DB_SSLMODE:-require}"
+        printf "database.default.options = '%s'\n" "${DB_OPTIONS:-}"
+        printf 'IMPUESTO = %s\n' "${IMPUESTO:-10}"
+        printf 'GANANCIA = %s\n' "${GANANCIA:-25}"
+    } > .env
+    chown www-data:www-data .env
+fi
+
 if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
     attempt=1
     until php spark migrate --all; do
         if [ "$attempt" -ge 30 ]; then
-            echo "No fue posible conectar a la base de datos local." >&2
+            echo "No fue posible conectar a la base de datos." >&2
             exit 1
         fi
 

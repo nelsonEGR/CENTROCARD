@@ -3,7 +3,7 @@ services:
     name: centrocard-pos
     runtime: docker
     plan: free
-    # Usa la misma región que Neon (us-east-2 = Ohio) para minimizar latencia
+    # Usa la misma region que Neon (us-east-2 = Ohio) para minimizar latencia
     region: ohio
     dockerfilePath: ./Dockerfile
     healthCheckPath: /
@@ -12,21 +12,27 @@ services:
       - key: CI_ENVIRONMENT
         value: production
       # Ajusta la URL al nombre real del servicio en Render
-      - key: app.baseURL
+      - key: APP_BASE_URL
         value: https://centrocard-pos.onrender.com/
       # Parametros de negocio usados en tickets y precios
       - key: IMPUESTO
         value: "10"
       - key: GANANCIA
         value: "25"
-      # Credenciales: se configuran en el panel de Render (no en el repo)
-      - key: database.default.hostname
+      # Base de datos (Neon): credenciales en el panel de Render, no en el repo
+      - key: DB_HOSTNAME
         sync: false
-      - key: database.default.database
+      - key: DB_DATABASE
         sync: false
-      - key: database.default.username
+      - key: DB_USERNAME
         sync: false
-      - key: database.default.password
+      - key: DB_PASSWORD
         sync: false
-      - key: database.default.options
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_SCHEMA
+        value: public
+      - key: DB_SSLMODE
+        value: require
+      - key: DB_OPTIONS
         sync: false

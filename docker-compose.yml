@@ -1,60 +1,31 @@
-services:
-  database:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_DB: centrocard
-      POSTGRES_USER: centrocard
-      POSTGRES_PASSWORD: centrocard
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U centrocard -d centrocard"]
-      interval: 5s
-      timeout: 5s
-      retries: 12
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+name: centrocard
 
+services:
   app:
     build: .
     image: centrocard:local
-    depends_on:
-      database:
-        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      - "80:80"
     environment:
-      CI_ENVIRONMENT: development
-      RUN_MIGRATIONS: "true"
+      CI_ENVIRONMENT: ${CI_ENVIRONMENT:-development}
+      APP_BASE_URL: ${APP_BASE_URL:-http://centrocar.test/}
+      DB_HOSTNAME: ${DB_HOSTNAME:-}
+      DB_DATABASE: ${DB_DATABASE:-}
+      DB_USERNAME: ${DB_USERNAME:-}
+      DB_PASSWORD: ${DB_PASSWORD:-}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_SCHEMA: ${DB_SCHEMA:-public}
+      DB_SSLMODE: ${DB_SSLMODE:-require}
+      DB_OPTIONS: ${DB_OPTIONS:-}
+      IMPUESTO: ${IMPUESTO:-10}
+      GANANCIA: ${GANANCIA:-25}
+      RUN_MIGRATIONS: ${RUN_MIGRATIONS:-false}
       PORT: "80"
-      app.baseURL: https://centrocar.dev/
-      app.indexPage: ""
-      database.default.hostname: database
-      database.default.database: centrocard
-      database.default.username: centrocard
-      database.default.password: centrocard
-      database.default.DBDriver: Postgre
-      database.default.port: "5432"
-      database.default.schema: public
-      database.default.sslmode: disable
-      database.default.options: ""
-      IMPUESTO: "10"
-      GANANCIA: "25"
     volumes:
       - writable_data:/var/www/html/writable
       - product_images:/var/www/html/public/img/productos
 
-  proxy:
-    image: caddy:2.8-alpine
-    depends_on:
-      - app
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-
 volumes:
-  caddy_config:
-  caddy_data:
-  postgres_data:
   product_images:
   writable_data:
