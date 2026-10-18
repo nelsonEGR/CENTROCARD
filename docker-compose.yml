@@ -8,7 +8,9 @@ services:
     ports:
       - "80:80"
     environment:
-      CI_ENVIRONMENT: ${CI_ENVIRONMENT:-development}
+      # production oculta el debug toolbar y los comentarios DEBUG-VIEW.
+      # Usa development solo para depurar en local.
+      CI_ENVIRONMENT: ${CI_ENVIRONMENT:-production}
       APP_BASE_URL: ${APP_BASE_URL:-http://centrocar.test/}
       DB_HOSTNAME: ${DB_HOSTNAME:-}
       DB_DATABASE: ${DB_DATABASE:-}
