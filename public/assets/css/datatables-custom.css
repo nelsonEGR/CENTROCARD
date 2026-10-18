@@ -1,0 +1,79 @@
+/*
+ * Ajustes de la barra de botones de exportacion de DataTables.
+ * Objetivo: mantener los botones en una sola fila (sin salto de linea) y
+ * con una altura estable, para que la tabla no "salte" al llegar los datos.
+ *
+ * Nota: la integracion Bootstrap de DataTables envuelve los botones en
+ * ".dt-buttons.btn-group.flex-wrap" y cada boton es un ".btn.btn-secondary",
+ * por eso se anulan el flex del grupo y el tamano por defecto.
+ */
+.dataTables_wrapper .dt-buttons-row {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dataTables_wrapper .dt-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: .4rem;
+}
+
+.dataTables_wrapper .dt-buttons > .btn,
+.dataTables_wrapper .dt-buttons > .btn-group > .btn {
+    flex: 0 0 auto !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    padding: 0;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: .25rem !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    line-height: 1;
+}
+
+.dataTables_wrapper .dt-buttons > .btn:hover,
+.dataTables_wrapper .dt-buttons > .btn:focus,
+.dataTables_wrapper .dt-buttons > .btn:active,
+.dataTables_wrapper .dt-buttons > .btn.active,
+.dataTables_wrapper .dt-buttons > .btn.disabled,
+.dataTables_wrapper .dt-buttons > .btn-group > .btn:hover,
+.dataTables_wrapper .dt-buttons > .btn-group > .btn:focus,
+.dataTables_wrapper .dt-buttons > .btn-group > .btn:active,
+.dataTables_wrapper .dt-buttons > .btn-group > .btn.active,
+.dataTables_wrapper .dt-buttons > .btn-group > .btn.disabled {
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: 0;
+}
+
+.dataTables_wrapper .dt-buttons > .btn .badge,
+.dataTables_wrapper .dt-buttons > .btn-group > .btn .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: .9rem;
+}
+
+/* El boton de columnas (colvis) se envuelve en un .btn-group y agrega un caret. */
+.dataTables_wrapper .dt-buttons > .btn-group {
+    display: inline-flex;
+    align-items: center;
+}
+
+.dataTables_wrapper .dt-buttons .btn span.dt-down-arrow {
+    display: none;
+}

@@ -40,7 +40,7 @@
 <script src="<?php echo base_url('assets/js/app.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/all.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/DataTables/datatables.min.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/botones-perzonalizados.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/botones-perzonalizados.js'); ?>?v=<?php echo @filemtime(FCPATH . 'assets/js/botones-perzonalizados.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/sweetalert2.all.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js'); ?>"></script>
 <script src="<?php echo base_url('js/notie.min.js'); ?>"></script>

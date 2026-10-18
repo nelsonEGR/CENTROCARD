@@ -28,6 +28,7 @@ $datos = $session->get();
     <link rel="stylesheet" href="<?php echo base_url('assets/css/semi-dark.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/css/header-colors.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/DataTables/datatables.min.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/datatables-custom.css'); ?>?v=<?php echo @filemtime(FCPATH . 'assets/css/datatables-custom.css'); ?>" />
     <link href="<?php echo base_url('css/notie.min.css'); ?>" rel="stylesheet" />
 
     <title>Sistema de venta</title>

@@ -1,6 +1,7 @@
-const dom = "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
-"<'row'<'col-sm-12'tr>>" +
-"<'row'<'col-sm-5'i><'col-sm-7'p>>";
+const dom = "<'row align-items-center'<'col-sm-6'l><'col-sm-6 text-end'f>>" +
+    "<'row dt-buttons-row'<'col-12 text-center'B>>" +
+    "<'row mt-2'<'col-12'tr>>" +
+    "<'row align-items-center mt-2'<'col-sm-5'i><'col-sm-7'p>>";
 const buttons = [{
                 //Botón para Excel
                 extend: 'excelHtml5',
@@ -42,10 +43,13 @@ const buttons = [{
                 extend: 'csvHtml5',
                 footer: true,
                 text: '<span class="badge bg-success"><i class="fas fa-file-csv"></i></span>'
-            },
+            }
+            //Deshabilitado por ahora: botón de visibilidad de columnas (colvis).
+            //Para reactivarlo, quitar los marcadores /* y */ de las siguientes dos líneas.
+            /*,
             {
                 extend: 'colvis',
                 text: '<span class="badge bg-info"><i class="fas fa-columns"></i></span>',
                 postfixButtons: ['colvisRestore']
-            }
+            }*/
         ]
