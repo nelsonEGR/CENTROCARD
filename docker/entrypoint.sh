@@ -6,10 +6,14 @@ PORT="${PORT:-80}"
 
 # Genera el .env interno de CodeIgniter a partir de las variables de entorno
 # del contenedor. Asi la conexion se controla por variables (Docker/Render).
-if [ -n "${DB_HOSTNAME:-}" ]; then
-    {
-        printf 'CI_ENVIRONMENT = %s\n' "${CI_ENVIRONMENT:-production}"
-        printf "app.baseURL = '%s'\n" "${APP_BASE_URL:-http://localhost/}"
+# Render expone RENDER_EXTERNAL_URL automaticamente; APP_BASE_URL la sobrescribe.
+BASE_URL="${APP_BASE_URL:-${RENDER_EXTERNAL_URL:-http://localhost/}}"
+
+{
+    printf 'CI_ENVIRONMENT = %s\n' "${CI_ENVIRONMENT:-production}"
+    printf "app.baseURL = '%s'\n" "${BASE_URL}"
+
+    if [ -n "${DB_HOSTNAME:-}" ]; then
         printf 'database.default.hostname = %s\n' "${DB_HOSTNAME}"
         printf 'database.default.database = %s\n' "${DB_DATABASE:-}"
         printf 'database.default.username = %s\n' "${DB_USERNAME:-}"
@@ -19,11 +23,19 @@ if [ -n "${DB_HOSTNAME:-}" ]; then
         printf 'database.default.schema = %s\n' "${DB_SCHEMA:-public}"
         printf 'database.default.sslmode = %s\n' "${DB_SSLMODE:-require}"
         printf "database.default.options = '%s'\n" "${DB_OPTIONS:-}"
-        printf 'IMPUESTO = %s\n' "${IMPUESTO:-10}"
-        printf 'GANANCIA = %s\n' "${GANANCIA:-25}"
-    } > .env
-    chown www-data:www-data .env
+    fi
+
+    printf 'IMPUESTO = %s\n' "${IMPUESTO:-10}"
+    printf 'GANANCIA = %s\n' "${GANANCIA:-25}"
+} > .env
+chown www-data:www-data .env
+
+if [ -z "${DB_HOSTNAME:-}" ]; then
+    echo "ADVERTENCIA: DB_HOSTNAME no esta definido; la aplicacion no podra conectar a la base de datos." >&2
+else
+    echo "Base de datos configurada: ${DB_DATABASE:-?} en ${DB_HOSTNAME}:${DB_PORT:-5432}"
 fi
+echo "URL base: ${BASE_URL}"
 
 if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
     attempt=1

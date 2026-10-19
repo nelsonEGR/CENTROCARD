@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: centrocard-pos
+    name: centrocard
     runtime: docker
     plan: free
     # Usa la misma region que Neon (us-east-2 = Ohio) para minimizar latencia
@@ -11,9 +11,10 @@ services:
     envVars:
       - key: CI_ENVIRONMENT
         value: production
-      # Ajusta la URL al nombre real del servicio en Render
+      # Render define RENDER_EXTERNAL_URL automaticamente. Deja esta variable
+      # sin definir para usar esa URL, o asignala si usas un dominio propio.
       - key: APP_BASE_URL
-        value: https://centrocard-pos.onrender.com/
+        sync: false
       # Parametros de negocio usados en tickets y precios
       - key: IMPUESTO
         value: "10"
